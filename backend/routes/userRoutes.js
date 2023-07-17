@@ -3,9 +3,10 @@ const router = express.Router()
 
 const {register,login,getUser} = require('../controllers/userController')
 
+const {protect} = require("../middleware/authMiddleware")
 router.post('/',register)
 router.post('/login',login)
-router.get('/me',getUser)
+router.get('/me',protect,getUser)
 
 
 

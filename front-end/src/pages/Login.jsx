@@ -1,5 +1,10 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import {FaSignInAlt} from 'react-icons/fa';
+import {useSelector, useDispatch} from 'react-redux'
+import {useNavigate} from 'react-router-dom'
+import {toast} from 'react-toastify'
+import Loading from '../components/Loading';
+import { login,reset } from '../features/auth/authSlice'
 const Login = () => {
   const [formData, setFormData] = useState({
    
@@ -9,6 +14,26 @@ const Login = () => {
   })
 
   const {email,password} = formData;
+
+  const nav = useNavigate()
+  const dispatch = useDispatch()
+
+  const {user,isLoading,isSuccess,isError,message} = useSelector(
+    (state) => state.auth
+  )
+
+  useEffect(()=>{
+    if(isError){
+      toast.error(message)
+    }
+
+    if(isSuccess || user){
+      nav('/');
+    }
+
+    dispatch(reset())
+  },[user,isError,message,isSuccess,nav,dispatch])
+
   const textChange =(e)=>{
     setFormData((prevState)=>({
       ...prevState,[e.target.name]:e.target.value
@@ -17,6 +42,16 @@ const Login = () => {
 
   const submitted = (e) =>{
     e.preventDefault()
+
+    const userData={
+      email,
+      password,
+    }
+    dispatch(login(userData))
+  }
+
+  if(isLoading){
+    return <Loading/>
   }
   return (
     <>

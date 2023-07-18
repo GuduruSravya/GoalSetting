@@ -169,6 +169,18 @@ h3 {
   transform: scale(0.98);
 }
 
+.Toastify__toast-body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.Toastify__toast-icon > svg {
+  width: 24px; /* Adjust the width as needed */
+  height: 24px; /* Adjust the height as needed */
+}
+
 .loadingSpinnerContainer {
   position: fixed;
   top: 0;

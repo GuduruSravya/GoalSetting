@@ -1,6 +1,11 @@
 import React from 'react'
 import { useState,useEffect } from 'react'
+import {useSelector, useDispatch} from 'react-redux'
+import {useNavigate} from 'react-router-dom'
+import {toast} from 'react-toastify'
 import {FaUser} from 'react-icons/fa'
+import { register,reset } from '../features/auth/authSlice'
+import Loading from '../components/Loading'
 const Register = () => {
   const [formData, setFormData] = useState({
     name:'',
@@ -9,7 +14,27 @@ const Register = () => {
     confirmpassword:''
   })
 
+
   const {name,email,password,confirmpassword} = formData;
+  const nav = useNavigate()
+  const dispatch = useDispatch()
+
+  const {user,isLoading,isSuccess,isError,message} = useSelector(
+    (state) => state.auth
+  )
+
+  useEffect(()=>{
+    if(isError){
+      toast.error(message)
+    }
+
+    if(isSuccess || user){
+      nav('/');
+    }
+
+    dispatch(reset())
+  },[user,isError,message,isSuccess,nav,dispatch])
+
   const textChange =(e)=>{
     setFormData((prevState)=>({
       ...prevState,[e.target.name]:e.target.value
@@ -18,6 +43,20 @@ const Register = () => {
 
   const submitted = (e) =>{
     e.preventDefault()
+
+    if(password !== confirmpassword){
+      toast.error('Passwords do not match')
+    }
+    else{
+      const userData = {
+        name,email,password
+      }
+
+      dispatch(register(userData))
+    }
+  }
+  if(isLoading){
+    return <Loading/>
   }
   return (
     <>
@@ -49,7 +88,7 @@ const Register = () => {
         </div>
 
         <div className="form-group">
-        <input type="password" className="form-control"  id="confirmpassword" name="confirmpassword" value={name} placeholder='Enter your password again'
+        <input type="password" className="form-control"  id="confirmpassword" name="confirmpassword" value={confirmpassword} placeholder='Enter your password again'
         onChange={textChange}
         />
         </div>

@@ -11,10 +11,9 @@ const Header = () => {
     const user = useSelector((state)=> state.auth.user)
 
     const Logout = () =>{
-        
         dispatch(logout())
         dispatch(reset())
-        nav('/')
+        nav('/login')
     }
   return (
     <header className='header'>

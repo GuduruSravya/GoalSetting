@@ -39,15 +39,15 @@ const updateGoals = asyncHandler(async (req,res) =>{
         throw new Error('Goal not found')
     }
 
-    const user = await User.findById(req.user.id)
+    
 
-    if(!user){
+    if(!req.user){
         res.status(400)
         throw new Error("User does not exist")
     }
     
     //Only users can delete their own goals
-    if(goal.user.toString() !== user.id){
+    if(goal.user.toString() !== req.user.id){
         res.status(401)
         throw new Error("User not authorized")
     }
@@ -68,15 +68,15 @@ const deleteGoals = asyncHandler(async (req,res) =>{
         throw new Error('Goal is not available')
     }
 
-    const user = await User.findById(req.user.id)
+    
 
-    if(!user){
+    if(!req.user){
         res.status(400)
         throw new Error("User does not exist")
     }
     
     //Only users can delete their own goals
-    if(goal.user.toString() !== user.id){
+    if(goal.user.toString() !== req.user.id){
         res.status(401)
         throw new Error("User not authorized")
     }

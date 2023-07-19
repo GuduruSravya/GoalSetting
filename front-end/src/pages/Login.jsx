@@ -82,6 +82,9 @@ const Login = () => {
         <div className="form-group">
           <button type='submit' className="btn btn-block">Submit</button>
         </div>
+        <div>
+          Use Demo credentials: Email:demo@gmail.com password:demo@123
+        </div>
       </form>
     </section>
     </>

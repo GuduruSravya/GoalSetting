@@ -67,9 +67,6 @@ const deleteGoals = asyncHandler(async (req,res) =>{
         res.status(400)
         throw new Error('Goal is not available')
     }
-
-    
-
     if(!req.user){
         res.status(400)
         throw new Error("User does not exist")

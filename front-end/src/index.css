@@ -108,6 +108,12 @@ h3 {
   background: none;
   font-size: 1.5rem;
 }
+.update__div{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 
 

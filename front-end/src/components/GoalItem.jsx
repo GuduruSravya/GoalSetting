@@ -37,9 +37,22 @@ const GoalItem = ({goal}) => {
     </button>
     <div className='update__div'>
     {isEditing ? (
-          <button className="btn" onClick={handleUpdateText}>
+        <>
+            <button className="btn" onClick={handleUpdateText}>
             Update
+            </button>&nbsp;
+            <button
+            className="btn"
+            onClick={() => {
+              setIsEditing(false);
+            }}
+            >
+            Go back
           </button>
+
+        </>
+          
+          
         ) : (
           <button
             className="btn"
